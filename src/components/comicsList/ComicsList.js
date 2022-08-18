@@ -8,7 +8,7 @@ import useMarvelService from "../service/service";
 
 const ComicsList = () => {
     const [array, setArray] = useState([]),
-          [offset, setOffset] = useState(),
+          [offset, setOffset] = useState(300),
           [newLoading, setNewLoading] = useState(false);
 
     const {getComicsList, loading} = useMarvelService();
@@ -21,10 +21,13 @@ const ComicsList = () => {
         (first) ? setNewLoading(false) : setNewLoading(true) ;
         getComicsList(offset)
         .then(item => {
+            console.log(item)
             setArray(array => [...array, ...item]);
             setOffset(offset => offset + 8);
             setNewLoading(false);
-            console.log(offset);
+        })
+        .catch(error => {
+            console.log(error)
         });  
     };
 
